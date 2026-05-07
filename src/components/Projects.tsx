@@ -1,7 +1,7 @@
 import { motion, useInView, AnimatePresence } from 'framer-motion'
-import type { Variants } from 'framer-motion'
 import { useRef, useState } from 'react'
-import { ArrowUpRight } from 'lucide-react'
+import { ArrowUpRight, Lock } from 'lucide-react'
+import { fadeUp } from '../utils/animations'
 
 interface Project {
   num: string
@@ -53,14 +53,6 @@ const projects: Project[] = [
 
 ]
 
-const fadeUp: Variants = {
-  hidden: { opacity: 0, y: 50 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] },
-  },
-}
 
 function ProjectItem({ project, index }: { project: Project; index: number }) {
   const ref = useRef<HTMLDivElement>(null)
@@ -98,15 +90,34 @@ function ProjectItem({ project, index }: { project: Project; index: number }) {
         ))}
       </div>
 
-      <a
-        href={project.link}
-        className="group/link inline-flex items-center gap-3 text-white font-bold text-sm uppercase tracking-widest hover:text-purple-400 transition-colors"
-      >
-        Ver Proyecto
-        <span className="w-10 h-10 rounded-full border border-purple-900/50 flex items-center justify-center group-hover/link:border-purple-500 group-hover/link:translate-x-1 group-hover/link:-translate-y-1 transition-all">
-          <ArrowUpRight size={18} />
+      {project.link === '#' ? (
+        <span
+          className="inline-flex items-center gap-2"
+          style={{
+            color: 'var(--text-dim)',
+            fontSize: '0.8rem',
+            fontWeight: 600,
+            textTransform: 'uppercase',
+            letterSpacing: '0.1em',
+            cursor: 'default',
+          }}
+        >
+          <Lock size={14} />
+          Repositorio Privado
         </span>
-      </a>
+      ) : (
+        <a
+          href={project.link}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="group/link inline-flex items-center gap-3 text-white font-bold text-sm uppercase tracking-widest hover:text-purple-400 transition-colors"
+        >
+          Ver Proyecto
+          <span className="w-10 h-10 rounded-full border border-purple-900/50 flex items-center justify-center group-hover/link:border-purple-500 group-hover/link:translate-x-1 group-hover/link:-translate-y-1 transition-all">
+            <ArrowUpRight size={18} />
+          </span>
+        </a>
+      )}
     </div>
   )
 

@@ -1,16 +1,8 @@
 import { motion, useScroll, useTransform } from 'framer-motion'
-import type { Variants } from 'framer-motion'
 import { useRef } from 'react'
 import { ArrowDownRight, FileText } from 'lucide-react'
-
-const GithubIcon = ({ size }: { size: number }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
-)
-
-const LinkedinIcon = ({ size }: { size: number }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
-)
-
+import { GithubIcon, LinkedinIcon } from '../utils/icons'
+import { fadeUpStagger } from '../utils/animations'
 
 const socialLinks = [
   { icon: GithubIcon, href: 'https://github.com/LegonBCA', label: 'GitHub' },
@@ -23,18 +15,6 @@ const techLogos = [
   'Python', 'PHP', 'Postman', 'Linux'
 ]
 
-const fadeUp: Variants = {
-  hidden: { opacity: 0, y: 40 },
-  visible: (i: number) => ({
-    opacity: 1,
-    y: 0,
-    transition: {
-      delay: 0.15 + i * 0.1,
-      duration: 0.7,
-      ease: [0.16, 1, 0.3, 1],
-    },
-  }),
-}
 
 export default function Hero() {
   const sectionRef = useRef<HTMLElement>(null)
@@ -64,53 +44,51 @@ export default function Hero() {
           {/* ── LEFT: Photo + geometric block ── */}
           <motion.div
             className="relative flex items-center justify-center order-1 md:order-1"
-            variants={fadeUp}
+            variants={fadeUpStagger}
             initial="hidden"
             animate="visible"
             custom={0}
             style={{ y: imageY }}
           >
-            {/* Purple border frame with animated glow */}
-            <motion.div
+            {/* Frame border offset — sutil, editorial */}
+            <div
               className="absolute"
-              animate={{ boxShadow: ['0 0 10px #7c3aed44', '0 0 30px #7c3aedaa', '0 0 10px #7c3aed44'] }}
-              transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
               style={{
                 width: '80%',
                 maxWidth: '420px',
                 aspectRatio: '3/4',
-                backgroundColor: 'transparent',
-                border: '2px solid var(--accent)',
-                borderRadius: '24px',
+                border: '1px solid var(--accent)',
+                borderRadius: '20px',
                 top: '54%',
                 left: '54%',
                 transform: 'translate(-50%, -50%)',
                 zIndex: 1,
+                opacity: 0.4,
               }}
             />
 
-            {/* Subtle glow behind block */}
+            {/* Glow behind photo */}
             <div
               className="absolute"
               style={{
-                width: '70%',
-                height: '70%',
+                width: '60%',
+                height: '60%',
                 background: 'radial-gradient(circle, var(--accent-glow) 0%, transparent 70%)',
                 top: '50%',
                 left: '50%',
                 transform: 'translate(-50%, -50%)',
-                filter: 'blur(40px)',
-                opacity: 0.3, /* Dimmed as requested */
+                filter: 'blur(60px)',
+                opacity: 0.25,
                 zIndex: 0,
               }}
             />
 
             <motion.img
               src="/FotoBENJA.png"
-              alt="Profile portrait"
-              initial={{ opacity: 0, scale: 0.9 }}
+              alt="Benjamín Contreras Alvial — Full Stack Developer"
+              initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+              transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
               className="relative"
               style={{
                 width: '80%',
@@ -119,8 +97,8 @@ export default function Hero() {
                 objectFit: 'cover',
                 objectPosition: 'center top',
                 aspectRatio: '3/4',
-                borderRadius: '24px',
-                boxShadow: '0 20px 40px rgba(0,0,0,0.4)',
+                borderRadius: '20px',
+                boxShadow: '0 25px 50px rgba(0,0,0,0.5), 0 0 0 1px rgba(124,58,237,0.08)',
               }}
             />
           </motion.div>
@@ -130,9 +108,45 @@ export default function Hero() {
             className="flex flex-col justify-center order-2 md:order-2"
             style={{ y: textY, gap: '1.5rem' }}
           >
+            {/* ── Disponibility badge ── */}
+            <motion.div
+              variants={fadeUpStagger}
+              initial="hidden"
+              animate="visible"
+              custom={0.5}
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.5rem',
+                padding: '0.35rem 0.9rem',
+                borderRadius: '999px',
+                border: '1px solid rgba(34, 197, 94, 0.25)',
+                backgroundColor: 'rgba(34, 197, 94, 0.06)',
+                fontSize: '0.75rem',
+                fontWeight: 500,
+                color: '#86efac',
+                width: 'fit-content',
+              }}
+            >
+              <motion.span
+                animate={{ opacity: [1, 0.3, 1] }}
+                transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+                style={{
+                  width: '6px',
+                  height: '6px',
+                  borderRadius: '50%',
+                  backgroundColor: '#22c55e',
+                  boxShadow: '0 0 8px #22c55e',
+                  flexShrink: 0,
+                  display: 'block',
+                }}
+              />
+              Disponible para nuevas oportunidades
+            </motion.div>
+
             {/* Greeting */}
             <motion.p
-              variants={fadeUp}
+              variants={fadeUpStagger}
               initial="hidden"
               animate="visible"
               custom={1}
@@ -149,7 +163,7 @@ export default function Hero() {
 
             {/* Name — big bold + serif italic word */}
             <motion.h1
-              variants={fadeUp}
+              variants={fadeUpStagger}
               initial="hidden"
               animate="visible"
               custom={2}
@@ -181,7 +195,7 @@ export default function Hero() {
 
             {/* Description */}
             <motion.p
-              variants={fadeUp}
+              variants={fadeUpStagger}
               initial="hidden"
               animate="visible"
               custom={3}
@@ -193,15 +207,41 @@ export default function Hero() {
               }}
             >
               Especializado en arquitecturas backend con .NET y C#, construyendo productos desde el servidor hasta la interfaz.
-              <br /><br />
-              <span style={{ color: 'var(--accent-light)', fontWeight: 500, fontStyle: 'italic' }}>
-                — Construyo APIs que no se caen a las 3am.
-              </span>
             </motion.p>
+
+            {/* ── Stats row ── */}
+            <motion.div
+              variants={fadeUpStagger}
+              initial="hidden"
+              animate="visible"
+              custom={3.5}
+              style={{
+                display: 'flex',
+                gap: '2rem',
+                paddingTop: '1.5rem',
+                borderTop: '1px solid var(--border)',
+                marginTop: '0.25rem',
+              }}
+            >
+              {[
+                { num: '3+', label: 'Años coding' },
+                { num: '.NET', label: 'Stack principal' },
+                { num: 'Temuco', label: 'Chile' },
+              ].map(stat => (
+                <div key={stat.label}>
+                  <div style={{ fontSize: '1.1rem', fontWeight: 700, color: 'var(--text)', letterSpacing: '-0.02em' }}>
+                    {stat.num}
+                  </div>
+                  <div style={{ fontSize: '0.7rem', color: 'var(--text-dim)', textTransform: 'uppercase', letterSpacing: '0.08em', fontWeight: 500, marginTop: '0.15rem' }}>
+                    {stat.label}
+                  </div>
+                </div>
+              ))}
+            </motion.div>
 
             {/* Buttons and Social Icons */}
             <motion.div
-              variants={fadeUp}
+              variants={fadeUpStagger}
               initial="hidden"
               animate="visible"
               custom={4}
@@ -325,55 +365,42 @@ export default function Hero() {
           </motion.div>
         </div>
 
-        {/* ── Bottom: Tech logos row ── */}
+        {/* ── Bottom: Tech marquee ── */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.8, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.9, duration: 1 }}
           style={{
             borderTop: '1px solid var(--border)',
-            paddingTop: '2rem',
-            paddingBottom: '2rem',
+            paddingTop: '1.5rem',
+            paddingBottom: '1.5rem',
             marginTop: '2rem',
             overflow: 'hidden',
           }}
         >
-          <p
-            style={{
-              fontSize: '0.7rem',
-              textTransform: 'uppercase',
-              letterSpacing: '0.2em',
-              color: 'var(--text-dim)',
-              marginBottom: '1rem',
-              fontWeight: 500,
-            }}
-          >
-            Stack Tecnológico
-          </p>
-          <div style={{ display: 'flex', overflow: 'hidden', whiteSpace: 'nowrap', WebkitMaskImage: 'linear-gradient(to right, transparent, black 5%, black 95%, transparent)', maskImage: 'linear-gradient(to right, transparent, black 5%, black 95%, transparent)' }}>
+          <div style={{ display: 'flex', overflow: 'hidden', whiteSpace: 'nowrap', WebkitMaskImage: 'linear-gradient(to right, transparent, black 8%, black 92%, transparent)', maskImage: 'linear-gradient(to right, transparent, black 8%, black 92%, transparent)' }}>
             <motion.div
               animate={{ x: ['0%', '-50%'] }}
-              transition={{ ease: 'linear', duration: 30, repeat: Infinity, repeatType: 'loop' }}
-              style={{ display: 'flex', gap: '3rem', width: 'max-content', paddingRight: '3rem' }}
+              transition={{ ease: 'linear', duration: 35, repeat: Infinity, repeatType: 'loop' }}
+              style={{ display: 'flex', alignItems: 'center', width: 'max-content' }}
             >
               {[...techLogos, ...techLogos].map((tech, idx) => (
                 <span
                   key={idx}
-                  className="transition-colors duration-300"
-                  style={{
-                    fontSize: '0.85rem',
-                    fontWeight: 500,
-                    color: 'var(--text-dim)',
-                    letterSpacing: '0.05em',
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.color = 'var(--text)'
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.color = 'var(--text-dim)'
-                  }}
+                  style={{ display: 'flex', alignItems: 'center' }}
                 >
-                  {tech}
+                  <span
+                    style={{
+                      fontSize: '0.8rem',
+                      fontWeight: 500,
+                      color: 'var(--text-dim)',
+                      letterSpacing: '0.04em',
+                      padding: '0 1.5rem',
+                    }}
+                  >
+                    {tech}
+                  </span>
+                  <span style={{ color: 'var(--accent)', fontSize: '0.35rem', opacity: 0.5 }}>●</span>
                 </span>
               ))}
             </motion.div>

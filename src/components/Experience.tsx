@@ -1,7 +1,7 @@
 import { motion, useInView } from 'framer-motion'
-import type { Variants } from 'framer-motion'
 import { useRef } from 'react'
 import { Briefcase, Wrench } from 'lucide-react'
+import { fadeUp } from '../utils/animations'
 
 interface ExperienceItem {
   company: string
@@ -34,7 +34,7 @@ const experiences: ExperienceItem[] = [
     color: '#7c3aed',
   },
   {
-    company: 'NTT Data',
+    company: 'NTT DATA',
     icon: <Briefcase size={20} color="#ffffff" />,
     role: 'Backend Developer (Ciclo Especialización)',
     period: 'Sep 2025 — Nov 2025',
@@ -53,25 +53,90 @@ const experiences: ExperienceItem[] = [
   },
 ]
 
-const fadeVariant: Variants = {
-  hidden: (isLeft: boolean) => ({
-    opacity: 0,
-    x: isLeft ? -60 : 60,
-  }),
-  visible: {
-    opacity: 1,
-    x: 0,
-    transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] },
-  },
+/** Tarjeta de experiencia reutilizable — antes estaba duplicada */
+function ExperienceCard({ item }: { item: ExperienceItem }) {
+  return (
+    <div
+      style={{
+        backgroundColor: 'var(--surface)',
+        border: '1px solid var(--border)',
+        borderLeft: item.isActive ? '3px solid var(--accent)' : '1px solid var(--border)',
+        borderRadius: '10px',
+        padding: '1.25rem',
+        maxWidth: '400px',
+        width: '100%',
+      }}
+    >
+      <div className="flex items-center gap-2 mb-2">
+        <span
+          style={{
+            display: 'inline-block',
+            fontSize: '0.7rem',
+            fontWeight: 600,
+            color: 'var(--accent-light)',
+            letterSpacing: '0.1em',
+            textTransform: 'uppercase',
+            padding: '0.2rem 0.6rem',
+            borderRadius: '999px',
+            backgroundColor: 'var(--accent-glow)',
+          }}
+        >
+          {item.period}
+        </span>
+        {item.isActive && (
+          <span
+            style={{
+              fontSize: '0.65rem',
+              fontWeight: 700,
+              textTransform: 'uppercase',
+              letterSpacing: '0.1em',
+              color: '#fff',
+              backgroundColor: 'var(--accent)',
+              padding: '0.2rem 0.5rem',
+              borderRadius: '4px',
+              boxShadow: '0 0 10px rgba(124, 58, 237, 0.5)',
+            }}
+          >
+            Actual
+          </span>
+        )}
+      </div>
+      <h3
+        style={{
+          fontSize: '1.15rem',
+          fontWeight: 700,
+          color: 'var(--text)',
+          marginBottom: '0.25rem',
+        }}
+      >
+        {item.company}
+      </h3>
+      <p
+        style={{
+          fontSize: '0.85rem',
+          fontWeight: 500,
+          color: 'var(--accent-light)',
+          marginBottom: '0.75rem',
+          fontFamily: 'var(--font-serif)',
+          fontStyle: 'italic',
+        }}
+      >
+        {item.role}
+      </p>
+      <div
+        style={{
+          fontSize: '0.85rem',
+          lineHeight: 1.65,
+          color: 'var(--text-muted)',
+        }}
+      >
+        {item.description}
+      </div>
+    </div>
+  )
 }
 
-function TimelineItem({
-  item,
-  index,
-}: {
-  item: ExperienceItem
-  index: number
-}) {
+function TimelineItem({ item, index }: { item: ExperienceItem; index: number }) {
   const ref = useRef<HTMLDivElement>(null)
   const inView = useInView(ref, { once: true, margin: '-80px' })
   const isLeft = index % 2 === 0
@@ -88,7 +153,7 @@ function TimelineItem({
         marginBottom: '1rem',
       }}
     >
-      {/* ── Left side content ── */}
+      {/* ── Left column ── */}
       <div
         style={{
           gridColumn: '1 / 2',
@@ -101,99 +166,24 @@ function TimelineItem({
       >
         {isLeft ? (
           <motion.div
-            custom={isLeft}
-            variants={fadeVariant}
+            variants={fadeUp}
             initial="hidden"
             animate={inView ? 'visible' : 'hidden'}
-            whileHover={{ y: -2, boxShadow: '0 0 15px rgba(124, 58, 237, 0.2)' }}
-            style={{
-              backgroundColor: 'var(--surface)',
-              border: '1px solid var(--border)',
-              borderLeft: item.isActive ? '2px solid var(--accent)' : '1px solid var(--border)',
-              borderRadius: '10px',
-              padding: '1.25rem',
-              maxWidth: '400px',
-              width: '100%',
-              transition: 'all 0.3s ease',
-            }}
+            whileHover={{ y: -2, boxShadow: '0 0 20px rgba(124, 58, 237, 0.15)' }}
+            style={{ transition: 'all 0.3s ease' }}
           >
-            <div className="flex items-center gap-2 mb-2">
-              <span
-                style={{
-                  display: 'inline-block',
-                  fontSize: '0.7rem',
-                  fontWeight: 600,
-                  color: 'var(--accent-light)',
-                  letterSpacing: '0.1em',
-                  textTransform: 'uppercase',
-                  padding: '0.2rem 0.6rem',
-                  borderRadius: '999px',
-                  backgroundColor: 'var(--accent-glow)',
-                }}
-              >
-                {item.period}
-              </span>
-              {item.isActive && (
-                <span
-                  style={{
-                    fontSize: '0.65rem',
-                    fontWeight: 700,
-                    textTransform: 'uppercase',
-                    letterSpacing: '0.1em',
-                    color: '#fff',
-                    backgroundColor: 'var(--accent)',
-                    padding: '0.2rem 0.5rem',
-                    borderRadius: '4px',
-                    boxShadow: '0 0 10px rgba(124, 58, 237, 0.5)',
-                  }}
-                >
-                  Actual
-                </span>
-              )}
-            </div>
-            <h3
-              style={{
-                fontSize: '1.15rem',
-                fontWeight: 700,
-                color: 'var(--text)',
-                marginBottom: '0.25rem',
-              }}
-            >
-              {item.company}
-            </h3>
-            <p
-              style={{
-                fontSize: '0.85rem',
-                fontWeight: 500,
-                color: 'var(--accent-light)',
-                marginBottom: '0.75rem',
-                fontFamily: 'var(--font-serif)',
-                fontStyle: 'italic',
-              }}
-            >
-              {item.role}
-            </p>
-            <div
-              style={{
-                fontSize: '0.85rem',
-                lineHeight: 1.65,
-                color: 'var(--text-muted)',
-              }}
-            >
-              {item.description}
-            </div>
+            <ExperienceCard item={item} />
           </motion.div>
         ) : (
           <div />
         )}
       </div>
 
-      {/* ── Center line + circle ── */}
+      {/* ── Center: line + icon ── */}
       <div
         className="relative flex flex-col items-center"
         style={{ gridColumn: '2 / 3', alignSelf: 'stretch' }}
       >
-        {/* Vertical line */}
         <div
           className="absolute"
           style={{
@@ -205,7 +195,6 @@ function TimelineItem({
             transform: 'translateX(-50%)',
           }}
         />
-        {/* Company circle */}
         <motion.div
           initial={{ scale: 0 }}
           animate={inView ? { scale: 1 } : {}}
@@ -217,7 +206,7 @@ function TimelineItem({
             borderRadius: '50%',
             backgroundColor: 'var(--accent)',
             border: '3px solid var(--bg)',
-            boxShadow: `0 0 20px rgba(124, 58, 237, 0.4)`,
+            boxShadow: '0 0 20px rgba(124, 58, 237, 0.4)',
             zIndex: 2,
             marginTop: '0.5rem',
             flexShrink: 0,
@@ -227,7 +216,7 @@ function TimelineItem({
         </motion.div>
       </div>
 
-      {/* ── Right side content ── */}
+      {/* ── Right column ── */}
       <div
         style={{
           gridColumn: '3 / 4',
@@ -240,87 +229,13 @@ function TimelineItem({
       >
         {!isLeft ? (
           <motion.div
-            custom={isLeft}
-            variants={fadeVariant}
+            variants={fadeUp}
             initial="hidden"
             animate={inView ? 'visible' : 'hidden'}
-            whileHover={{ y: -2, boxShadow: '0 0 15px rgba(124, 58, 237, 0.2)' }}
-            style={{
-              backgroundColor: 'var(--surface)',
-              border: '1px solid var(--border)',
-              borderLeft: item.isActive ? '2px solid var(--accent)' : '1px solid var(--border)',
-              borderRadius: '10px',
-              padding: '1.25rem',
-              maxWidth: '400px',
-              width: '100%',
-              transition: 'all 0.3s ease',
-            }}
+            whileHover={{ y: -2, boxShadow: '0 0 20px rgba(124, 58, 237, 0.15)' }}
+            style={{ transition: 'all 0.3s ease' }}
           >
-            <div className="flex items-center gap-2 mb-2">
-              <span
-                style={{
-                  display: 'inline-block',
-                  fontSize: '0.7rem',
-                  fontWeight: 600,
-                  color: 'var(--accent-light)',
-                  letterSpacing: '0.1em',
-                  textTransform: 'uppercase',
-                  padding: '0.2rem 0.6rem',
-                  borderRadius: '999px',
-                  backgroundColor: 'var(--accent-glow)',
-                }}
-              >
-                {item.period}
-              </span>
-              {item.isActive && (
-                <span
-                  style={{
-                    fontSize: '0.65rem',
-                    fontWeight: 700,
-                    textTransform: 'uppercase',
-                    letterSpacing: '0.1em',
-                    color: '#fff',
-                    backgroundColor: 'var(--accent)',
-                    padding: '0.2rem 0.5rem',
-                    borderRadius: '4px',
-                    boxShadow: '0 0 10px rgba(124, 58, 237, 0.5)',
-                  }}
-                >
-                  Actual
-                </span>
-              )}
-            </div>
-            <h3
-              style={{
-                fontSize: '1.15rem',
-                fontWeight: 700,
-                color: 'var(--text)',
-                marginBottom: '0.25rem',
-              }}
-            >
-              {item.company}
-            </h3>
-            <p
-              style={{
-                fontSize: '0.85rem',
-                fontWeight: 500,
-                color: 'var(--accent-light)',
-                marginBottom: '0.75rem',
-                fontFamily: 'var(--font-serif)',
-                fontStyle: 'italic',
-              }}
-            >
-              {item.role}
-            </p>
-            <div
-              style={{
-                fontSize: '0.85rem',
-                lineHeight: 1.65,
-                color: 'var(--text-muted)',
-              }}
-            >
-              {item.description}
-            </div>
+            <ExperienceCard item={item} />
           </motion.div>
         ) : (
           <div />
@@ -376,7 +291,7 @@ export default function Experience() {
         {/* ── Timeline ── */}
         <div className="relative" style={{ paddingBottom: '2rem' }}>
           {experiences.map((exp, i) => (
-            <TimelineItem key={exp.company + i} item={exp} index={i} />
+            <TimelineItem key={`${exp.company}-${i}`} item={exp} index={i} />
           ))}
         </div>
       </div>

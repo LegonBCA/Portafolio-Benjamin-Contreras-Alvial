@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import SplashScreen from './components/SplashScreen'
+import ScrollProgress from './components/ScrollProgress'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
 import Projects from './components/Projects'
@@ -25,19 +26,22 @@ function App() {
       {showSplash && <SplashScreen onComplete={() => setShowSplash(false)} />}
       
       {!showSplash && (
-        <div style={{ animation: 'labelFade 0.8s ease-out forwards' }}>
-          <Navbar />
-          <main>
-            <Hero />
-            <Projects />
-            <Skills />
-            <Experience />
-            <Certifications />
-            <Contact />
-          </main>
-        </div>
+        <>
+          <ScrollProgress />
+          <div style={{ animation: 'labelFade 0.8s ease-out forwards' }}>
+            <Navbar />
+            <main>
+              <Hero />
+              <Projects />
+              <Skills />
+              <Experience />
+              <Certifications />
+              <Contact />
+            </main>
+          </div>
+          <WhatsAppButton />
+        </>
       )}
-      {!showSplash && <WhatsAppButton />}
     </>
   )
 }
