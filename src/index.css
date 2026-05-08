@@ -267,3 +267,30 @@ button {
   0% { opacity: 0; transform: translateY(5px); }
   100% { opacity: 1; transform: translateY(0); }
 }
+
+/* ═══════════════════════════════════════
+   WHATSAPP FAB — Responsive positioning
+   ═══════════════════════════════════════ */
+
+/* Mobile: bottom-left corner, no tooltip */
+.whatsapp-fab {
+  bottom: 1.25rem;
+  right: 1.25rem;
+  flex-direction: row-reverse; /* ícono a la derecha, tooltip a la izquierda */
+}
+
+.whatsapp-tooltip {
+  display: none; /* Oculta el tooltip en mobile */
+}
+
+/* Desktop (md+): más espacio, tooltip visible en hover */
+@media (min-width: 768px) {
+  .whatsapp-fab {
+    bottom: 2rem;
+    right: 2rem;
+  }
+
+  .whatsapp-tooltip {
+    display: inline-block;
+  }
+}

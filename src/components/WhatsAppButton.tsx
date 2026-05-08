@@ -8,62 +8,61 @@ export default function WhatsAppButton() {
       rel="noopener noreferrer"
       initial={{ scale: 0, opacity: 0 }}
       animate={{ scale: 1, opacity: 1 }}
-      transition={{ type: 'spring', stiffness: 260, damping: 20, delay: 1 }}
-      whileHover={{ scale: 1.1 }}
-      whileTap={{ scale: 0.95 }}
-      className="group"
+      transition={{ type: 'spring', stiffness: 260, damping: 20, delay: 1.2 }}
+      whileHover={{ scale: 1.08 }}
+      whileTap={{ scale: 0.93 }}
+      className="group whatsapp-fab"
+      aria-label="Contactar por WhatsApp"
       style={{
         position: 'fixed',
-        bottom: '2rem',
-        right: '2rem',
+        zIndex: 9998,
+        cursor: 'pointer',
+        textDecoration: 'none',
         display: 'flex',
         alignItems: 'center',
         gap: '0.6rem',
-        zIndex: 9999,
-        cursor: 'pointer',
-        textDecoration: 'none',
+        /* Posición responsive via CSS */
       }}
-      aria-label="Contactar por WhatsApp"
     >
-      {/* Tooltip que aparece al hacer hover */}
+      {/* Tooltip — solo visible en hover y en pantallas grandes */}
       <motion.span
-        initial={{ opacity: 0, x: 10, scale: 0.9 }}
-        whileHover={{ opacity: 1, x: 0, scale: 1 }}
+        initial={{ opacity: 0, x: 8, scale: 0.95 }}
         style={{
           backgroundColor: '#1a1a1a',
           color: '#f5f5f5',
-          fontSize: '0.8rem',
+          fontSize: '0.78rem',
           fontWeight: 500,
-          padding: '0.4rem 0.75rem',
+          padding: '0.35rem 0.7rem',
           borderRadius: '6px',
-          border: '1px solid #333',
+          border: '1px solid #2a2a2a',
           whiteSpace: 'nowrap',
           pointerEvents: 'none',
           opacity: 0,
+          transition: 'opacity 0.2s ease, transform 0.2s ease',
         }}
-        className="group-hover:opacity-100 transition-opacity"
+        className="whatsapp-tooltip group-hover:opacity-100"
       >
         ¡Escríbeme!
       </motion.span>
 
-      {/* Botón principal */}
+      {/* Botón circular principal */}
       <div
         style={{
-          width: '58px',
-          height: '58px',
+          width: '52px',
+          height: '52px',
           backgroundColor: '#25D366',
           borderRadius: '50%',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          boxShadow: '0 4px 20px rgba(37, 211, 102, 0.35)',
+          boxShadow: '0 4px 20px rgba(37, 211, 102, 0.4)',
           flexShrink: 0,
           position: 'relative',
         }}
       >
         {/* Pulse ring animado */}
         <motion.div
-          animate={{ scale: [1, 1.4, 1], opacity: [0.5, 0, 0.5] }}
+          animate={{ scale: [1, 1.45, 1], opacity: [0.45, 0, 0.45] }}
           transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' }}
           style={{
             position: 'absolute',
@@ -73,8 +72,8 @@ export default function WhatsAppButton() {
           }}
         />
         <svg
-          width="30"
-          height="30"
+          width="26"
+          height="26"
           viewBox="0 0 24 24"
           fill="#fff"
           xmlns="http://www.w3.org/2000/svg"
