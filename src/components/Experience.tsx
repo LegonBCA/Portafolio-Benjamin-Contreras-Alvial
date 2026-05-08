@@ -63,7 +63,7 @@ function ExperienceCard({ item }: { item: ExperienceItem }) {
         borderLeft: item.isActive ? '3px solid var(--accent)' : '1px solid var(--border)',
         borderRadius: '10px',
         padding: '1.25rem',
-        maxWidth: '400px',
+        maxWidth: '100%',
         width: '100%',
       }}
     >
@@ -142,104 +142,118 @@ function TimelineItem({ item, index }: { item: ExperienceItem; index: number }) 
   const isLeft = index % 2 === 0
 
   return (
-    <div
-      ref={ref}
-      className="relative"
-      style={{
-        display: 'grid',
-        gridTemplateColumns: '1fr 80px 1fr',
-        alignItems: 'stretch',
-        minHeight: '200px',
-        marginBottom: '1rem',
-      }}
-    >
-      {/* ── Left column ── */}
-      <div
-        style={{
-          gridColumn: '1 / 2',
-          display: 'flex',
-          justifyContent: 'flex-end',
-          paddingRight: '2rem',
-          paddingTop: '0.5rem',
-          alignSelf: 'start',
-        }}
-      >
-        {isLeft ? (
-          <motion.div
-            variants={fadeUp}
-            initial="hidden"
-            animate={inView ? 'visible' : 'hidden'}
-            whileHover={{ y: -2, boxShadow: '0 0 20px rgba(124, 58, 237, 0.15)' }}
-            style={{ transition: 'all 0.3s ease' }}
-          >
-            <ExperienceCard item={item} />
-          </motion.div>
-        ) : (
-          <div />
-        )}
-      </div>
-
-      {/* ── Center: line + icon ── */}
-      <div
-        className="relative flex flex-col items-center"
-        style={{ gridColumn: '2 / 3', alignSelf: 'stretch' }}
-      >
-        <div
-          className="absolute"
-          style={{
-            top: 0,
-            bottom: 0,
-            width: '2px',
-            backgroundColor: 'var(--border)',
-            left: '50%',
-            transform: 'translateX(-50%)',
-          }}
-        />
+    <div ref={ref}>
+      {/* ── MOBILE: simple vertical card list ── */}
+      <div className="flex md:hidden mb-6">
         <motion.div
-          initial={{ scale: 0 }}
-          animate={inView ? { scale: 1 } : {}}
-          transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
-          className="relative flex items-center justify-center"
-          style={{
-            width: '48px',
-            height: '48px',
-            borderRadius: '50%',
-            backgroundColor: 'var(--accent)',
-            border: '3px solid var(--bg)',
-            boxShadow: '0 0 20px rgba(124, 58, 237, 0.4)',
-            zIndex: 2,
-            marginTop: '0.5rem',
-            flexShrink: 0,
-          }}
+          variants={fadeUp}
+          initial="hidden"
+          animate={inView ? 'visible' : 'hidden'}
+          whileHover={{ y: -2, boxShadow: '0 0 20px rgba(124, 58, 237, 0.15)' }}
+          style={{ transition: 'all 0.3s ease', width: '100%' }}
         >
-          {item.icon}
+          <ExperienceCard item={item} />
         </motion.div>
       </div>
 
-      {/* ── Right column ── */}
+      {/* ── DESKTOP: zigzag 3-column grid ── */}
       <div
+        className="relative hidden md:grid"
         style={{
-          gridColumn: '3 / 4',
-          display: 'flex',
-          justifyContent: 'flex-start',
-          paddingLeft: '2rem',
-          paddingTop: '0.5rem',
-          alignSelf: 'start',
+          gridTemplateColumns: '1fr 80px 1fr',
+          alignItems: 'stretch',
+          minHeight: '200px',
+          marginBottom: '1rem',
         }}
       >
-        {!isLeft ? (
+        {/* Left column */}
+        <div
+          style={{
+            gridColumn: '1 / 2',
+            display: 'flex',
+            justifyContent: 'flex-end',
+            paddingRight: '2rem',
+            paddingTop: '0.5rem',
+            alignSelf: 'start',
+          }}
+        >
+          {isLeft ? (
+            <motion.div
+              variants={fadeUp}
+              initial="hidden"
+              animate={inView ? 'visible' : 'hidden'}
+              whileHover={{ y: -2, boxShadow: '0 0 20px rgba(124, 58, 237, 0.15)' }}
+              style={{ transition: 'all 0.3s ease' }}
+            >
+              <ExperienceCard item={item} />
+            </motion.div>
+          ) : (
+            <div />
+          )}
+        </div>
+
+        {/* Center: line + icon */}
+        <div
+          className="relative flex flex-col items-center"
+          style={{ gridColumn: '2 / 3', alignSelf: 'stretch' }}
+        >
+          <div
+            className="absolute"
+            style={{
+              top: 0,
+              bottom: 0,
+              width: '2px',
+              backgroundColor: 'var(--border)',
+              left: '50%',
+              transform: 'translateX(-50%)',
+            }}
+          />
           <motion.div
-            variants={fadeUp}
-            initial="hidden"
-            animate={inView ? 'visible' : 'hidden'}
-            whileHover={{ y: -2, boxShadow: '0 0 20px rgba(124, 58, 237, 0.15)' }}
-            style={{ transition: 'all 0.3s ease' }}
+            initial={{ scale: 0 }}
+            animate={inView ? { scale: 1 } : {}}
+            transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
+            className="relative flex items-center justify-center"
+            style={{
+              width: '48px',
+              height: '48px',
+              borderRadius: '50%',
+              backgroundColor: 'var(--accent)',
+              border: '3px solid var(--bg)',
+              boxShadow: '0 0 20px rgba(124, 58, 237, 0.4)',
+              zIndex: 2,
+              marginTop: '0.5rem',
+              flexShrink: 0,
+            }}
           >
-            <ExperienceCard item={item} />
+            {item.icon}
           </motion.div>
-        ) : (
-          <div />
-        )}
+        </div>
+
+        {/* Right column */}
+        <div
+          style={{
+            gridColumn: '3 / 4',
+            display: 'flex',
+            justifyContent: 'flex-start',
+            paddingLeft: '2rem',
+            paddingTop: '0.5rem',
+            alignSelf: 'start',
+          }}
+        >
+          {!isLeft ? (
+            <motion.div
+              variants={fadeUp}
+              initial="hidden"
+              animate={inView ? 'visible' : 'hidden'}
+              whileHover={{ y: -2, boxShadow: '0 0 20px rgba(124, 58, 237, 0.15)' }}
+              style={{ transition: 'all 0.3s ease' }}
+            >
+              <ExperienceCard item={item} />
+            </motion.div>
+          ) : (
+            <div />
+          )}
+        </div>
       </div>
     </div>
   )
@@ -259,7 +273,7 @@ export default function Experience() {
           animate={headerInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
           className="text-center"
-          style={{ marginBottom: '4rem' }}
+          style={{ marginBottom: '3rem' }}
         >
           <p
             style={{

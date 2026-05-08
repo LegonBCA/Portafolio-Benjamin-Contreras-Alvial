@@ -35,11 +35,11 @@ export default function Hero() {
     >
       <div
         className="section-container relative flex flex-col justify-center"
-        style={{ minHeight: 'calc(100vh - 80px)' }}
+        style={{ minHeight: 'calc(100vh - 80px)', paddingTop: '1rem', paddingBottom: '1rem' }}
       >
         {/* ── Main grid: Photo left + Text right ── */}
         <div
-          className="w-full grid grid-cols-1 md:grid-cols-2 items-center gap-12 md:gap-16 pt-8 pb-24"
+          className="w-full grid grid-cols-1 md:grid-cols-2 items-center gap-8 md:gap-16 pt-6 pb-16 md:pt-8 md:pb-24"
         >
           {/* ── LEFT: Photo + geometric block ── */}
           <motion.div
@@ -55,7 +55,7 @@ export default function Hero() {
               className="absolute"
               style={{
                 width: '80%',
-                maxWidth: '420px',
+                maxWidth: '340px',
                 aspectRatio: '3/4',
                 border: '1px solid var(--accent)',
                 borderRadius: '20px',
@@ -91,8 +91,8 @@ export default function Hero() {
               transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
               className="relative"
               style={{
-                width: '80%',
-                maxWidth: '420px',
+                width: '65%',
+                maxWidth: '340px',
                 zIndex: 2,
                 objectFit: 'cover',
                 objectPosition: 'center top',
@@ -168,7 +168,7 @@ export default function Hero() {
               animate="visible"
               custom={2}
               style={{
-                fontSize: 'clamp(2.8rem, 5vw, 4.5rem)',
+                fontSize: 'clamp(2.2rem, 7vw, 4.5rem)',
                 fontWeight: 700,
                 lineHeight: 1.05,
                 letterSpacing: '-0.03em',
@@ -217,7 +217,8 @@ export default function Hero() {
               custom={3.5}
               style={{
                 display: 'flex',
-                gap: '2rem',
+                flexWrap: 'wrap',
+                gap: '1.25rem 2rem',
                 paddingTop: '1.5rem',
                 borderTop: '1px solid var(--border)',
                 marginTop: '0.25rem',
@@ -245,10 +246,10 @@ export default function Hero() {
               initial="hidden"
               animate="visible"
               custom={4}
-              className="flex items-center flex-wrap"
-              style={{ gap: '1.5rem', marginTop: '2rem' }}
+              className="flex flex-col sm:flex-row items-start sm:items-center flex-wrap"
+              style={{ gap: '1rem', marginTop: '2rem' }}
             >
-              <div className="flex items-center" style={{ gap: '1rem' }}>
+              <div className="flex items-center flex-wrap" style={{ gap: '0.75rem' }}>
                 <a
                   href="#projects"
                   className="inline-flex items-center justify-center transition-all duration-300"
@@ -257,7 +258,7 @@ export default function Hero() {
                     color: '#fff',
                     fontSize: '0.9rem',
                     fontWeight: 600,
-                    padding: '0.85rem 1.8rem',
+                    padding: '0.85rem 1.5rem',
                     borderRadius: '4px',
                     gap: '0.5rem',
                     letterSpacing: '0.01em',
@@ -282,7 +283,7 @@ export default function Hero() {
                     color: 'var(--text)',
                     fontSize: '0.9rem',
                     fontWeight: 500,
-                    padding: '0.85rem 1.8rem',
+                    padding: '0.85rem 1.5rem',
                     borderRadius: '4px',
                     border: '1px solid var(--border)',
                     letterSpacing: '0.01em',
@@ -308,7 +309,7 @@ export default function Hero() {
                     color: 'var(--text)',
                     fontSize: '0.9rem',
                     fontWeight: 500,
-                    padding: '0.85rem 1.8rem',
+                    padding: '0.85rem 1.5rem',
                     borderRadius: '4px',
                     border: '1px solid var(--border)',
                     letterSpacing: '0.01em',

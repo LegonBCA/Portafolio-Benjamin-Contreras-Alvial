@@ -139,8 +139,8 @@ export default function Certifications() {
               style={{
                 display: 'grid',
                 gridTemplateColumns: '42px 1fr auto',
-                gap: '1.25rem',
-                padding: '1.5rem 0',
+                gap: '0.75rem 1rem',
+                padding: '1.25rem 0',
                 borderBottom: '1px solid var(--border)',
                 alignItems: 'center',
                 textDecoration: 'none',
@@ -175,14 +175,15 @@ export default function Certifications() {
               <div style={{ minWidth: 0 }}>
                 <h3
                   style={{
-                    fontSize: '1rem',
+                    fontSize: '0.95rem',
                     fontWeight: 600,
                     color: 'var(--text)',
                     marginBottom: '0.2rem',
                     transition: 'color 0.2s ease',
                     overflow: 'hidden',
                     textOverflow: 'ellipsis',
-                    whiteSpace: 'nowrap',
+                    whiteSpace: 'normal',
+                    wordBreak: 'break-word',
                   }}
                   className="group-hover:text-purple-400"
                 >

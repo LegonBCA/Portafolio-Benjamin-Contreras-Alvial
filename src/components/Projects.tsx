@@ -62,13 +62,13 @@ function ProjectItem({ project, index }: { project: Project; index: number }) {
 
   // Common UI elements
   const TextSide = (
-    <div className={`w-full ${project.isMobile ? 'flex flex-col items-center text-center' : 'lg:w-1/2 flex flex-col gap-6 pt-4 lg:pt-8'}`}>
-      <div className={`flex items-center gap-4 ${project.isMobile ? 'justify-center mb-4' : 'mb-6'}`}>
+    <div className={`w-full ${project.isMobile ? 'flex flex-col items-center text-center' : 'lg:w-1/2 flex flex-col gap-4 lg:gap-6 pt-2 lg:pt-8'}`}>
+      <div className={`flex items-center gap-4 ${project.isMobile ? 'justify-center mb-4' : 'mb-4 lg:mb-6'}`}>
         <span className="text-sm font-bold text-purple-500 tracking-widest">{project.num}</span>
         <div className="h-[1px] w-12 bg-purple-900/50" />
       </div>
 
-      <h3 className={`text-3xl lg:text-5xl font-bold text-white leading-tight ${project.isMobile ? 'mb-4' : 'mb-0'}`}>
+      <h3 className={`text-2xl sm:text-3xl lg:text-5xl font-bold text-white leading-tight ${project.isMobile ? 'mb-4' : 'mb-0'}`}>
         {project.title.replace(project.titleAccent, '').trim()}{' '}
         <span className="serif-italic text-purple-400">
           {project.titleAccent}
@@ -173,8 +173,8 @@ function ProjectItem({ project, index }: { project: Project; index: number }) {
       animate={inView ? 'visible' : 'hidden'}
       variants={fadeUp}
       className={project.isMobile
-        ? "flex flex-col items-center mb-32"
-        : `flex flex-col lg:flex-row ${!isEven ? 'lg:flex-row-reverse' : ''} gap-12 items-start mb-32`}
+        ? "flex flex-col items-center mb-16 lg:mb-32"
+        : `flex flex-col lg:flex-row ${!isEven ? 'lg:flex-row-reverse' : ''} gap-8 lg:gap-12 items-start mb-16 lg:mb-32`}
     >
       {project.isMobile ? (
         <>
@@ -196,7 +196,7 @@ export default function Projects() {
   const headerInView = useInView(headerRef, { once: true, margin: '-100px' })
 
   return (
-    <section id="projects" className="py-32 lg:py-48 select-none overflow-hidden bg-black relative">
+    <section id="projects" className="py-16 lg:py-32 select-none overflow-hidden bg-black relative">
       <div className="absolute top-[20%] -left-[10%] w-[600px] h-[600px] bg-purple-900/10 blur-[120px] rounded-full pointer-events-none" />
       <div className="absolute bottom-[20%] -right-[10%] w-[600px] h-[600px] bg-purple-900/10 blur-[120px] rounded-full pointer-events-none" />
 
@@ -206,12 +206,12 @@ export default function Projects() {
           initial={{ opacity: 0, y: 40 }}
           animate={headerInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-          className="mb-40 lg:mb-64"
+          className="mb-16 lg:mb-40"
         >
           <p className="text-xs lg:text-sm font-bold text-purple-500 uppercase tracking-[0.3em] mb-4">
             Trabajo Seleccionado
           </p>
-          <h2 className="text-4xl lg:text-7xl font-bold text-white leading-[1.1] mb-16">
+          <h2 className="text-3xl sm:text-4xl lg:text-7xl font-bold text-white leading-[1.1] mb-8 lg:mb-16">
             Proyectos que{' '}
             <span className="serif-italic text-purple-400">
               definen
@@ -221,8 +221,8 @@ export default function Projects() {
         </motion.div>
 
         <div
-          className="flex flex-col gap-32 mt-16 lg:mt-32"
-          style={{ paddingTop: '4rem' }}
+          className="flex flex-col gap-16 lg:gap-32 mt-8 lg:mt-32"
+          style={{ paddingTop: '2rem' }}
         >
           {projects.map((project, i) => (
             <ProjectItem key={project.num} project={project} index={i} />

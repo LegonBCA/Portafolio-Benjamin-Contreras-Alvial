@@ -76,7 +76,7 @@ export default function Contact() {
 
   return (
     <>
-      <section id="contact" className="relative" style={{ padding: '6rem 0' }}>
+      <section id="contact" className="relative" style={{ padding: '4rem 0' }}>
         <div className="section-container relative">
 
           {/* ── Main grid ── */}
@@ -211,7 +211,7 @@ export default function Contact() {
                 backdropFilter: 'blur(10px)',
                 border: '1px solid var(--border)',
                 borderRadius: '16px',
-                padding: '2.5rem',
+                padding: 'clamp(1.25rem, 4vw, 2.5rem)',
                 boxShadow: '0 20px 40px rgba(0, 0, 0, 0.4)',
               }}
             >
