@@ -25,16 +25,6 @@ export default function Contact() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (WEB3FORMS_KEY === 'e89f658d-a4b1-497f-9e3e-b39f4da73d4f') {
-      console.warn('⚠️ Web3Forms: configura tu access key en Contact.tsx')
-      // Demo mode: simula éxito sin enviar
-      setStatus('loading')
-      await new Promise(r => setTimeout(r, 1200))
-      setStatus('success')
-      setFormData({ name: '', email: '', message: '' })
-      return
-    }
-
     setStatus('loading')
     try {
       const res = await fetch('https://api.web3forms.com/submit', {
